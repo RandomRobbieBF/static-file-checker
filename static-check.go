@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"strings"
 )
 
 type StaticFiles struct {
@@ -73,8 +74,13 @@ func main() {
 
 	// Write URLs to the file
 	for _, filename := range staticFiles.Paths {
+	if strings.HasSuffix(filename, ".png") || strings.HasSuffix(filename, ".jpg") || strings.HasSuffix(filename, ".jpeg") || strings.HasSuffix(filename, ".gif") || strings.HasSuffix(filename, ".svg") || strings.HasSuffix(filename, ".woff2"){
+		fmt.Println("Ignoring Image files.")
+	} else {
 		url := fmt.Sprintf("%s/static/%s", url, filename)
 		file.WriteString(url + "\n")
+	}
+		
 	}
 
 	// Run the OS command
